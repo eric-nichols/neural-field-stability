@@ -9,15 +9,12 @@ from matplotlib.figure import Figure
 import wx
 import numpy as np
 
-
-
 # import sys, wxversion
 # print "Python version:", (sys.version)
 # print "\nWX version:", wxversion.getInstalled()
 # print "\nMatplotlib version:", matplotlib.__version__ 
     
 class findRoots(wx.Frame):
-    
 
     def __init__(self, *args, **kw):
 
@@ -31,7 +28,6 @@ class findRoots(wx.Frame):
         #  2:   stable and prior calculation   stable
         self.isStable     = 1 # assume we are starting stable
         
-
         self.pi2          = 2 * np.pi
         numVals           = 50
         self.Krange       = np.array(range(0, numVals)) / 25.0 - 1
@@ -77,7 +73,6 @@ class findRoots(wx.Frame):
         # s, ae and ai values inside self.boxfK
         self.fKvarsBox    = wx.StaticBoxSizer(wx.StaticBox(self.panelFK, label="Range of spacial inhibition"), wx.HORIZONTAL)
         sbox              = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the S      variable
-
         
         # Sigmoidal firing rate box
         self.SigmoidBox    = wx.StaticBoxSizer(wx.StaticBox(self.panelRoot, label="Sigmoidal firing rate"), wx.VERTICAL)
@@ -87,9 +82,6 @@ class findRoots(wx.Frame):
         thetabox           = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the theta variable        
         s0box              = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the S_0   variable 
         
-        
-
-        
         # ae and ai values inside stationary state
         self.stationaryBox    = wx.StaticBoxSizer(wx.StaticBox(self.panelRoot, label="Stationary state"), wx.VERTICAL)
         self.stationaryEqBox  = wx.BoxSizer(wx.HORIZONTAL) 
@@ -98,22 +90,16 @@ class findRoots(wx.Frame):
         self.aibox            = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the ai     variable
         self.I0box            = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the I0    variable
 
-
         # V values inside self.boxfK
         self.vBox     = wx.StaticBoxSizer(wx.StaticBox(self.panelRoot, label="Voltage minimum, maximum and discrete units"), wx.HORIZONTAL)
         self.vMin     = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the ae     variable
         self.vMax     = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the ai     variable
         self.vDiscr   = wx.BoxSizer(wx.HORIZONTAL) # Box to modify the ai     variable
 
-
         # boxes inside the self.panelRoot
         self.boxGetRoot   = wx.BoxSizer(wx.VERTICAL)   # f(K) vertical box to hold all f(K) elements
         self.runButtonbox = wx.BoxSizer(wx.HORIZONTAL) # Box to hold the root button
         # *********************************************************************
-
-
-
-
 
         # *********************************************************************
         # The values for self.panelFK
@@ -124,10 +110,9 @@ class findRoots(wx.Frame):
         __location__  = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 
         # The f(K) equation images
-#         self.fkEqRED = wx.StaticBitmap(self.panelFK, wx.ID_ANY, wx.Bitmap(os.path.join(__location__, 'pics/fKred.tif'))) 
-#         self.fkEqRED.Hide()
-#         self.fkEqBLUE = wx.StaticBitmap(self.panelFK, wx.ID_ANY, wx.Bitmap(os.path.join(__location__, 'pics/fKblue.tif'))) 
-#         
+        # self.fkEqRED = wx.StaticBitmap(self.panelFK, wx.ID_ANY, wx.Bitmap(os.path.join(__location__, 'pics/fKred.tif'))) 
+        # self.fkEqRED.Hide()
+        # self.fkEqBLUE = wx.StaticBitmap(self.panelFK, wx.ID_ANY, wx.Bitmap(os.path.join(__location__, 'pics/fKblue.tif')))  
         
         # initialize
         self.fkEqRED = wx.Image(os.path.join(__location__, 'pics/fKred.tif'), wx.BITMAP_TYPE_TIF).Rescale(252, 63.3)  # 3
@@ -147,7 +132,7 @@ class findRoots(wx.Frame):
         self.SPrimeEqText = wx.StaticText(  self.panelFK, label='                  ') #, pos=(20, 90))   
         self.SprimeBox.Add(self.SprimeEq, flag=wx.EXPAND) #, border=5)  # show equation as static bitmap
         self.SprimeBox.Add(self.SPrimeEqText, flag=wx.CENTER)
-   
+        
         # *********************************************************************
         # Root V0 box
         self.V0text = wx.StaticText(self.panelFK, -1, u'V\u2080 =')
@@ -155,8 +140,6 @@ class findRoots(wx.Frame):
         self.V0Box.Add(self.V0text, flag=wx.RIGHT, border=0)    # add stext to s box
         self.V0Box.Add(self.V0textAns, flag=wx.RIGHT, border=0)    # add stext to s box
 
-
-        
         # *********************************************************************
         # Range of spacial Inhibition, s
         # s value inside self.boxfK
@@ -171,10 +154,6 @@ class findRoots(wx.Frame):
         self.fKvarsBox.Add((25, -1))
         self.fKvarsBox.Add(sbox, flag=wx.ALIGN_CENTRE_HORIZONTAL) #, border=10)
         # *********************************************************************
-        
-        
-
-
 
 
         # *********************************************************************
@@ -189,18 +168,16 @@ class findRoots(wx.Frame):
         self.subplot.set_ylabel('f (k)', fontsize=12)
         self.subplot.set_xlabel('wave vector, k', fontsize=12)
 
-
         #x, y = self.canvas.GetSize()
         #self.canvas.SetSize((x, y-30))
 
         # *********************************************************************
         # Add the boxSigmoid elements
-      
+        
         self.boxfK.Add(self.fkEqBLUE, flag=wx.ALIGN_CENTRE_HORIZONTAL)
         self.boxfK.Add((-1, 20))
         self.boxfK.Add(self.fKvarsBox, flag=wx.ALIGN_CENTRE_HORIZONTAL)
         self.boxfK.Add((-1, 10))
-        
         
         self.boxfK.Add(self.V0Box, flag=wx.ALIGN_CENTRE_HORIZONTAL)
         
@@ -208,16 +185,10 @@ class findRoots(wx.Frame):
         self.boxfK.Add(self.SprimeBox, flag=wx.ALIGN_CENTRE_HORIZONTAL)
         self.boxfK.Add(self.canvas) #, proportion=1) #, border=0, flag=wx.ALL) # | wx.EXPAND)
         
-        
         # Add boxSigmoid to panelSigmoid         
         self.panelFK.SetSizer(self.boxfK)
         self.panelFK.SetMinSize((self.windowWidth, self.windowHeight))   
         # *********************************************************************
-
-
-
-
-
 
 
         # *********************************************************************
@@ -262,14 +233,12 @@ class findRoots(wx.Frame):
         self.I0box.Add(self.I0Var, flag=wx.LEFT, border=0) # add self.aiVar to aibox
         # ****************************************** 
 
-
         # Add variables to stationaryVarBox ************************
         self.stationaryVarBox.Add(self.aebox, flag=wx.ALIGN_CENTRE_HORIZONTAL, border=10)
         self.stationaryVarBox.Add((10, -1))
         self.stationaryVarBox.Add(self.aibox, flag=wx.ALIGN_CENTRE_HORIZONTAL, border=10)
         self.stationaryVarBox.Add((10, -1))
         self.stationaryVarBox.Add(self.I0box, flag=wx.ALIGN_CENTRE_HORIZONTAL, border=10)
-        
         
         # Add the equation and variable boxes to the stationary box
         self.stationaryBox.Add(self.stationaryEqBox, flag=wx.ALIGN_CENTRE_HORIZONTAL) #flag=wx.EXPAND|wx.Left|wx.RIGHT|wx.TOP, border=5)
@@ -284,7 +253,7 @@ class findRoots(wx.Frame):
         # Sigmoid equation
         self.SEq     = wx.StaticBitmap(self.panelRoot, wx.ID_ANY, wx.Bitmap(os.path.join(__location__, 'pics/S.png'))) 
         self.SigmoidEqBox.Add(self.SEq, flag=wx.EXPAND) #, border=5)  # show equation as static bitmap
-   
+        
         # The values for c ************************
         # declare and initialize c values
         self.cText = wx.StaticText(self.panelRoot, -1, "c =")
@@ -309,14 +278,12 @@ class findRoots(wx.Frame):
         s0box.Add(self.s0Var, flag=wx.LEFT, border=0) # add self.s0Var S0 box
         # ******************************************     
 
-
         # Add variables for S' to SprimeVarBox ************************
         self.SigmoidVarBox.Add(cbox, flag=wx.ALIGN_CENTRE_HORIZONTAL, border=10) 
         self.SigmoidVarBox.Add((20, -1))
         self.SigmoidVarBox.Add(thetabox, flag=wx.ALIGN_CENTRE_HORIZONTAL, border=10) 
         self.SigmoidVarBox.Add((20, -1))
         self.SigmoidVarBox.Add(s0box, flag=wx.ALIGN_CENTRE_HORIZONTAL) 
-
         
         # Add the equation and variable boxes to the S' box
         self.SigmoidBox.Add(self.SigmoidEqBox, flag=wx.ALIGN_CENTRE_HORIZONTAL) #flag=wx.EXPAND|wx.Left|wx.RIGHT|wx.TOP, border=5)
@@ -361,12 +328,6 @@ class findRoots(wx.Frame):
         # *********************************************************************
 
 
-
-
-
-
-
-
         # *********************************************************************
         # The root plot
         
@@ -374,9 +335,6 @@ class findRoots(wx.Frame):
         self.figureRoot.set_facecolor('white')
         self.canvasRoot  = FigureCanvasWxAgg( self.panelRoot, -1, self.figureRoot )
         self.subplotRoot = self.figureRoot.add_subplot( 111, axisbg='white' )
-
-        
-        
 
         self.boxGetRoot.Add((-1, 10))
         self.boxGetRoot.Add(self.runButtonbox, flag=wx.CENTER) #, border=5)  # show equation as static bitmap
@@ -398,8 +356,6 @@ class findRoots(wx.Frame):
         # *********************************************************************
 
 
-
-
         # *********************************************************************
         # Events
         # *********************************************************************
@@ -412,25 +368,15 @@ class findRoots(wx.Frame):
         self.s0Var.Bind(     wx.EVT_TEXT,         self.S0_Changed)     # bind S0 event
         self.vMinTxt.Bind(   wx.EVT_TEXT,         self.min_Changed)    # bind min V event
         self.vMaxTxt.Bind(   wx.EVT_TEXT,         self.max_Changed)    # bind max V event
-        self.vDskTxt.Bind(   wx.EVT_TEXT,         self.discrV_Changed) # bind V discretize event
-
-        
+        self.vDskTxt.Bind(   wx.EVT_TEXT,         self.discrV_Changed) # bind V discretize event 
         self.sVar.Bind(    wx.EVT_TEXT, self.s_Changed)     # bind S event
-        
-        
         #self.canvasRoot.Bind(wx.EVT_LEFT_DOWN, self.canvas_click)    # bind ae event
-
-
-
-
-
 
 
         # ***************************************************************************************************
         # Now put all the pieces together
         mainBox.Add(self.panelRoot, 2, wx.EXPAND)
         mainBox.Add(self.panelFK,   2, wx.ALL)
-        
         
         self.SetSizer(mainBox)
         self.Layout()
@@ -439,12 +385,6 @@ class findRoots(wx.Frame):
         self.Show(True) 
         # ***************************************************************************************************        
         
-
-
-
-
-
-
 
     def digRoot(self, e):
         '''Get our root points and plot them '''
@@ -462,7 +402,6 @@ class findRoots(wx.Frame):
         
         #self.Vmin -= self.I0
         #self.Vmax -= self.I0
-        
         
         for i in range(int(self.Vdsk)):
             Vnew = self.Vmin +float(i)*dV       # linear increase in V
@@ -512,12 +451,8 @@ class findRoots(wx.Frame):
             self.gotRoot(self.rootsY[0], ("%.7g" % round(self.rootsY[0],7)), True)
         else:
             self.gotRoot(None, '               ',   False)
-        
 
-        
     # ---------------------------------------------------------------   
-
-
 
     def gotRoot(self, root, stringRoot, findFK):
         self.V0 = root
@@ -525,8 +460,6 @@ class findRoots(wx.Frame):
         self.sigmoidPrime(root)
         self.fK(findFK)
         self.getRootBtn.Show() #WithEffect(5)
-
-   
 
     # ---------------------------------------------------------------   
 
@@ -552,7 +485,7 @@ class findRoots(wx.Frame):
         
 
     # ---------------------------------------------------------------   
-  
+    
     def getStationaryState(self, V): # Stationary state
         
         def S(V):
@@ -561,15 +494,7 @@ class findRoots(wx.Frame):
         
         return (self.ae-self.ai) * S(V) + self.I0
 
-
     # ---------------------------------------------------------------
-
-
-
-
-
-
-
 
 
     def fK(self, go=True):
@@ -588,8 +513,6 @@ class findRoots(wx.Frame):
                 div1 = num1 / np.sqrt(1.0 +k**2.0)**3
                 div2 = num2 / np.sqrt(self.s**2.0 +k**2.0)**3
                 self.data.append(div1 - div2)
- 
-
 
             # set up the y axis
             miniDat = min(self.data)
@@ -603,9 +526,6 @@ class findRoots(wx.Frame):
                 self.subplot.set_ylim(0.0, 1.2)
             else:
                 self.subplot.set_ylim(0.0, maxiDat+0.2)
-
-
-    
 
 
             # Plot the graph based on stability
@@ -645,14 +565,6 @@ class findRoots(wx.Frame):
         self.subplot.set_xlabel('wave vector, k', fontsize=12)
         
         self.canvas.draw()
-
-
-
-
-
-
-
-
 
 
     # *********************************************************************
@@ -723,13 +635,6 @@ class findRoots(wx.Frame):
             pass
 
 
-
-
-
-
-
-
-
 class selectRoot(wx.Frame):
 
     def __init__(self, parent):
@@ -737,9 +642,7 @@ class selectRoot(wx.Frame):
         wx.Frame.__init__(self, None, wx.ID_ANY, "Select a root")
         self.parent = parent
         
-        
         panel = wx.Panel(self)
- 
         msg = "Your " + str(int(parent.numRoots)) + " roots are:"
         message = wx.StaticText(panel, label=msg)
         
@@ -758,7 +661,7 @@ class selectRoot(wx.Frame):
             r3String = str(parent.rootsY[2])
             self.root3Btn = wx.Button(panel, label=r3String)
             self.root3Btn.Bind(wx.EVT_BUTTON, self.onRoot3)
- 
+
         sizer = wx.BoxSizer(wx.VERTICAL)
         flags = wx.ALL|wx.CENTER
 
@@ -774,7 +677,7 @@ class selectRoot(wx.Frame):
     def onRoot1(self, event):
         self.parent.gotRoot(self.parent.rootsY[0], ("%.7g" % round(self.parent.rootsY[0],7)), True)
         self.Close()
- 
+
     def onRoot2(self, event):
         self.parent.gotRoot(self.parent.rootsY[1], ("%.7g" % round(self.parent.rootsY[1],7)), True)
         self.Close()
@@ -782,7 +685,6 @@ class selectRoot(wx.Frame):
     def onRoot3(self, event):
         self.parent.gotRoot(self.parent.rootsY[2], ("%.7g" % round(self.parent.rootsY[2],7)), True)
         self.Close()
-         
 
 
                      
